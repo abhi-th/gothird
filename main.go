@@ -29,7 +29,10 @@
 // loops
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"github.com/abhi-th/gothird/gopkg1"
+)
 
 func main() {
 	//get the sum
@@ -42,7 +45,9 @@ func main() {
 //	for i:=0; i< 200; i++{
 //		fmt.Printf("%d \t %b \t %#x \t %#o \n",i,i,i,i)
 //	}
-	for i:=50;i<140;i++{
-		fmt.Printf("%d \t %b \t %x \t %o %q \n",i,i,i,i,i)
-	}
+//	for i:=50;i<140;i++{
+//		fmt.Printf("%d \t %b \t %x \t %o %q \n",i,i,i,i,i)
+//	}
+	//Scope
+	//fmt.Println(gopkg1.MyName1,gopkg1.MyName2,gopkg1.MyName3)
 }
