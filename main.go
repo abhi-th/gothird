@@ -291,16 +291,214 @@ package main
 //	yards := meters * metersToYards
 //	fmt.Println("You swam for about ", yards, " yards")
 //}
+//import "fmt"
+//
+//func main() {
+//	a := 77
+//	fmt.Println(a)
+//	fmt.Println(&a)
+//
+//	var b *int = &a
+//	fmt.Println(b)
+//	fmt.Println(*b)
+//	*b=75
+//	fmt.Println(a) //we changed the value here by call by reference
+//}
+//
+//Loops
+//for loop to print a series of number
+//import "fmt"
+//
+//func main(){
+//	for i:=3;i<=10;i++ {
+//		fmt.Println(i)
+//	}
+////	for j:=3;j<=10;++j{
+////		fmt.Println(j)
+////	}
+//}
+//
+//Nested For loops
+//import "fmt"
+//
+//func main(){
+//	for i:=0 ;i<5; i++{
+//		fmt.Print("\t")
+//		for j:=0;j<=5;j++{
+//			fmt.Print(i ,"-" ,j,"\n")
+//		}
+//	}
+//}
+//
+//While like loop with for loop
+//import "fmt"
+//
+//func main(){
+//	i:= 10 //initialize
+//	for i<100 {
+//		fmt.Println(i)
+//		i++
+//	}
+//}
+//
+//Infinite one
+//import "fmt"
+//
+//func main(){
+//	i:=0
+//	for i<10 {
+//		i++
+//		fmt.Println(i)
+//	}
+//}
+//
+//Lets use break with conditions
+//import "fmt"
+//
+//func main(){
+//	i:=0
+//	for {
+//		fmt.Println(i)
+//		if i>=11{ //here 11 will be printed before the condition is checked
+//			break;
+//		}
+//		i++
+//	}
+//}
+//
+//Program to get user 's input and show Odd/Even
+//import "fmt"
+//
+//func main() {
+//	var check int
+//	fmt.Println("Enter the number")
+//	fmt.Scan(&check)
+////	i := 0
+//	if check%2 == 0 {
+//		fmt.Println(check, " is even")
+//	}	else{
+//		fmt.Println(check, " is odd")
+//	}
+//}
+//
+//Program to print only odd no from series of number
+//import "fmt"
+//
+//func main(){
+//	var num1,num2 int
+//	fmt.Println("Enter The range below to get all the odd numbers in it")
+//	fmt.Println("Enter First Number")
+//	fmt.Scan(&num1)
+//	fmt.Println("Enter Second Number")
+//	fmt.Scan(&num2)
+//	i:=num1 -1 //-1 so that that first num is not left out from the loop
+//	for i<num2 {
+//		i++
+//		if i%2==0{
+//			continue
+//		}
+//		fmt.Println("The odd num is",i)
+//	}
+//}
+//
+//Program to print unicode of string/Number //consider going through `` and rune conversion once again if not getting from here
+//import "fmt"
+//
+//func main(){
+//	var char11 string
+//	fmt.Println("Enter the character you want unicode of")
+//	fmt.Scan(&char11)
+////	fmt.Println("The unicode for your entered value is as follow",[]byte(char11))
+//	fmt.Printf("%v \n %v","The unicode for your entered value is",[]byte(char11))
+//}
+//
+//Switch Statements and its "fallthrough"
+//import "fmt"
+//
+//func main(){
+//	var i string
+//	fmt.Println("Write from the names below")
+//	fmt.Println("ravi,ram,raju,sam")
+//	fmt.Scan(&i)
+//	switch{
+//		case len(i)==2:
+//			fmt.Println("This is selected if the string length is of two words")
+//		case i=="ravi",i=="sam":
+//			fmt.Println("hello ravi or sam")
+//		case i=="ram":
+//			fmt.Println("hello ram")
+//		case i=="raju":
+//			fmt.Println("hello raju")
+//		default:
+//			fmt.Println("Well the name is not in the directory")
+//	}
+//}
+//
+//Exercises question 6
+//import "fmt"
+//
+//func main() {
+//	for i := 1; i <= 100; i++ {
+//		if i%3 == 0  && i%5 == 0 {//or we can do i%15
+//			fmt.Println(i,"FizzBuzz")
+//		} else if i%3 == 0 {
+//			fmt.Println(i,"Fizz")
+//		} else if i%5 == 0 {
+//			fmt.Println(i,"Buzz")
+//		}else {
+//			fmt.Println(i)
+//		}
+//	}
+//}
+//
+//Exercise question 7
+//import "fmt"
+//
+//func main() {
+//	sum := 0
+//	for i := 1; i < 1000; i++ {
+//		if i%3 == 0 || i%5 == 0 {
+//			sum = sum + i
+//			//			fmt.Println(sum)
+//		}
+//	}
+//	fmt.Println(sum)
+//}
+//
+//Returning a function
+//import "fmt"
+//
+//func main() {
+//	fmt.Println(greet("abhijit", "thapa"))
+//}
+//func greet(fname, lname string) string { //returns single parameter
+//	return fmt.Sprint(fname, "\t", lname)
+//}
+//
+//Returning a function with two parameters
+//import "fmt"
+//
+//func main() {
+//	fmt.Println(greet("Abhijit", "Thapa"))
+//}
+//func greet(fname, lname string) (string, string) { //Two Parameters
+//	return fmt.Sprint(fname, lname), fmt.Sprint(lname, fname)
+//}
+//
+//Get The average of numbers //Recheck Video 69////////////////////////////////////////
 import "fmt"
 
 func main() {
-	a := 77
-	fmt.Println(a)
-	fmt.Println(&a)
-
-	var b *int = &a
-	fmt.Println(b)
-	fmt.Println(*b)
-	*b=75
-	fmt.Println(a) //we changed the value here by call by reference
+	data:= []int{25, 42, 73, 43, 64, 84}
+	n := average(data...)
+	fmt.Println(n)
+}
+func average(av ...int) int {
+	fmt.Println(av) //shown in slice
+	fmt.Printf("%T \n", av) //shown in slice
+	var total int
+	for _, tot := range av { //range loops over list of items
+		total += tot //shorthand for  loop
+	}
+	return total / len(av) //returns total
 }
