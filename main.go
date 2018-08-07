@@ -486,19 +486,537 @@ package main
 //}
 //
 //Get The average of numbers //Recheck Video 69////////////////////////////////////////
+//import "fmt"
+//
+//func main() {
+//	data := []float64{25, 42, 73, 43, 64, 84}
+//	n := average(data...)
+//	fmt.Println(n)
+//}
+//func average(av ...float64) float64 {
+//	fmt.Println(av)         //shown in slice
+//	fmt.Printf("%T \n", av) //shown in slice
+//	var total flaot64
+//	for _, tot := range av { //range loops over list of items
+//		total += tot //shorthand for  loop
+//	}
+//	return total / float64(len(av)) //returns total
+//}
+//
+//Edited one(same slice typed) //This works same and depends on the situation for use
+//import "fmt"
+//
+//func main() {
+//	data := []float64{25, 42, 73, 43, 64, 84}
+//	n := average(data)
+//	fmt.Println(n)
+//}
+//func average(av []float64) float64 {
+//	fmt.Println(av)         //shown in slice
+//	fmt.Printf("%T \n", av) //shown in slice
+//	var total float64
+//	for _, tot := range av { //range loops over list of items
+//		total += tot //shorthand for  loop
+//	}
+//	return total / float64(len(av)) //returns total
+//}
+//
+//Reviews Closure and func expression
+//function without closure and func expression
+//import "fmt"
+//
+//func greeting(){
+//	fmt.Println("Hello World")
+//}
+//
+//func main(){
+//	greeting()
+//}
+//function with funcexpression //only way for func inside function
+//import "fmt"
+//
+//func main(){
+//	var x int
+//	increment:=func() int{
+//		x++
+//		return x
+//	}
+//	fmt.Println(increment())
+//	fmt.Println(increment())
+//	fmt.Println(increment())
+//	fmt.Println(increment())
+//	fmt.Println(increment())
+//	fmt.Println(increment())
+//}
+//another way for func expression
+//import "fmt"
+//var x int
+//func makeincrementor() func() int{
+//	return func() int{
+//		x++
+//		return x
+//	}
+//}
+//func main(){
+//	increment:= makeincrementor()
+//	fmt.Println(increment())
+//	fmt.Println(increment())
+//	fmt.Println(increment())
+//	fmt.Println(increment())
+//	fmt.Println(increment())
+//	fmt.Println(increment())
+//}
+//
+//CLosure same previous examples
+//
+//Callback
+//import "fmt"
+//
+//func values(numbers []int, callback func() int) {
+//	for _, n := range numbers {
+//		callback(n)
+//	}
+//}
+//func main() {
+//	values([]int{2, 4, 6, 3, 5}, func(n int) {
+//		fmt.Println(n)
+//	})
+//}
+//
+//Call back example 2
+//import "fmt"
+//
+//func main() {
+//	ab := filter([]int{2, 43, 54, 5, 3}, func(n int) bool {
+//		return n > 1
+//	})
+//	fmt.Println(ab)
+//}
+//
+//func filter(numbers []int,callback func(int) bool) []int{
+//	var ab []int
+//	for _,n:=range numbers{
+//		if callback(n){
+//			ab=append(ab,n)
+//		}
+//	}
+//	return ab
+//}
+//
+//Recursion
+//import "fmt"
+// var x int
+//func factorial(x int)int{
+//	if x==0{
+//		return 1
+//	}
+//	return x * factorial(x-1)
+//}
+//
+//func main(){
+//	fmt.Println("Enter the number")
+//	fmt.Scan(&x)
+//	fmt.Println("You factorial value for this no is ",factorial(x))
+//}
+//
+//import "fmt"
+//
+//func main(){
+//	fmt.Println(factorial(4))
+//}
+//
+//func factorial(x int)int{
+//	if x==0{
+//		 return 1
+//	}
+//	return x * factorial(x-1)
+//}
+//
+//DEfer // sexecutes the func rigth before exit
+//import "fmt"
+//
+//func main() {
+//
+// 	defer world()
+//	hello()
+//}
+//func hello() {
+//	fmt.Println("hello ")
+//}
+//func world() {
+//	fmt.Println("World")
+//}
+//Another example of defer file with open and close//Limit reader
+//import (
+//	"os"
+//)
+//
+//func main() {
+//	src, err := os.Open("src.txt")
+//	if err != nil {
+//		panic(err)
+//	}
+//	defer src.Close()
+//
+//	dst, err := os.Create("dst.txt")
+//	if err != nil {
+//		panic(err)
+//	}
+//	defer dst.Close()
+//
+//	bs := make([]byte, 5)
+//	src.Read(bs)
+//	dst.Write(bs)
+//}
+//
+// this is a limit reader
+// we limit what is read
+// see io.ReadFull for func similiar to (*File)Read
+//
+//Exercises
+//Exercise 1
+//import "fmt"
+//
+//func checkeven(n int) /*this is parameter*/ (int, bool) /*and these are returns */ {
+//	return n / 2, n%2 == 0 /*two args for return*/
+//}
+//
+//func main() {
+//	a, b := checkeven(5)
+//	fmt.Println(a, b)
+//}
+//
+//Exercise 2
+//import "fmt"
+//
+//func main() {
+//	checkeven := func(n int) (int, bool) {
+//		return n / 2, n%2 == 0
+//	}
+//	a, b := checkeven(5)
+//	fmt.Println(a, b)
+//}
+//
+//Exercise 3
+//import "fmt"
+//
+//func main(){
+//	greatest:=max(3,7,5,9,8,78,3)
+//	fmt.Println(greatest)
+//}
+//func max(numbers ...int)int{
+//	var largest int
+//	for _,v := range numbers{
+//		if v > largest{
+//			largest=v
+//		}
+//	}
+//	return largest
+//}
+//Exercise 4
+//import "fmt"
+//
+//func main() {
+//	if (true && false) || (false && true) || !(false && false) {
+//		fmt.Println("true")
+//	} else {
+//		fmt.Println("false")
+//	}
+// //or below solution
+//fmt.Println((true&&false)||(false&&true)||!(false&&false))
+//}
+//Exercise 5
+//import "fmt"
+//
+//func main() {
+//	foo(1, 2)
+//	foo(1, 2, 3)
+//
+//	aSlice := []int{1, 2, 3, 4, 5}
+//	foo(aSlice...)
+//
+//	foo()
+//}
+//func foo(numbers ...int) {
+//	fmt.Println(numbers)
+//}
+//
+//Question 2
+//fibonaci series
+//import "fmt"
+//
+//func fibonacci(n int) int {
+//	if n <= 1 {
+//		return 1
+//	}
+//	return fibonacci(n-1) + fibonacci(n-2)
+//}
+//func main() {
+//	n := 0
+//	var sum int
+//	for i := n; fibonacci(i) < 4000000; i++ {
+//		if fibonacci(i)%2 == 0 {
+//			//			fmt.Println("Even value check ", fibonacci(i))
+//			sum = sum + fibonacci(i)
+//		}
+//		//		fmt.Println("overall values till loop ",i, fibonacci(i))
+//	}
+//	fmt.Println("The sum of even valued terms is", sum)
+//}
+//import (
+//	"fmt"
+//		//"math"
+//)
+//
+//func main() {
+//	var pri float64
+//	var i,n float64
+//	fmt.Println("Enter no to Print factorS of it")
+//	fmt.Scan(&pri)
+//	//	pri =math.Sqrt(pri)
+//	for i = 2; i < pri; i++ {
+//		if pri%i == 0 {
+//				for n := 2; n < 10 ; n++ {
+//					if i%n != 0 {
+//						i= math.Sqrt(i)
+//					}
+//				}
+//					fmt.Print(i, "\t")
+//		}
+//	}
+//}
+//import "fmt"
+//import "math"
+//
+//func main(){
+//	var num int
+//	fmt.Println("Enter your number")
+//	fmt.Scan(&num)
+//    for t := 2; t < num; t++ {
+//        if num%t == 0 {
+////			  fmt.Println(i,"ex")
+////			  for n:=2 ;n< 10;n++{
+////				  if i%n==0{
+//////					  fmt.Println("see",n,i)
+////					 continue
+////				  }
+////				  fmt.Println("see1",i)
+////			  }
+//
+//			  fmt.Println(IsPrime(t))
+//        }
+//    }
+//}
+//func IsPrime(value int) int {
+//    for i := 2; i <= int(math.Floor(float64(value) / 2)); i++ {
+//        if value%i == 0 {
+//			  continue
+//        }
+//    }
+//    return value
+//}
+//import "fmt"
+//
+//func main() {
+//	var num,largest int
+//	myslice:= make([]int,0,100)
+//	fmt.Print("Enter Number Here : ")
+//	fmt.Scan(&num)
+//	fmt.Print("Prime Factors are : ")
+//	for i := 2; i <= num; i++ {
+//		if num%i == 0 {
+//			//fmt.Println(i)
+//			s := notPrime(i)
+//			if !s {
+//				fmt.Print(i,"\t")
+//				myslice=append(myslice,i)
+//			} else {
+//				continue
+//				//    fmt.Println("Not Prime Factor =", i)
+//			}
+//		}
+//	}
+////	fmt.Println(myslice)
+//	for _,v:=range myslice{
+//		if v>largest{
+//			largest=v
+//		}
+//	}
+//	fmt.Println("\n","The largest Prime Factor is : ",largest)
+//}
+//
+//func notPrime(num int) bool {
+//	var notprime bool
+//	for i := 2; i <= num/2; i++ {
+//		if num%i == 0 && num > 2 {
+//			notprime = true
+//			break
+//		} else {
+//			notprime = false
+//		}
+//	}
+//	return notprime
+//}
+
+//
+//Array 1
+//
+//import ("fmt")
+//
+//func main(){
+//	var x[58] string
+//	fmt.Println(x)
+//	fmt.Println(len(x))
+//	fmt.Println(x[0])
+//	x[42]=777
+//	for i:=65;i<=122;i++{
+//		x[i - 65]= string(i)
+//	}
+//	fmt.Println(x)
+//	fmt.Println(len(x))
+//	fmt.Println(x[0])
+//}
+//
+//Array 2
+//
+//import "fmt"
+//
+//func main(){
+//	var x[58] string
+//	for i:=65; i<=122;i++{
+//		x[i-65] =string(i)
+//	}
+//	fmt.Println(x)
+//	fmt.Println(len(x))
+//	fmt.Println(x[22])
+//}
+//
+//Array 3
+//
+//import "fmt"
+//
+//func main(){
+//	var x[256] int
+//	for i:=0;i<256;i++{
+//		x[i]= i
+//	}
+//	for item,value:=range x{
+//		fmt.Println(item,value)
+////		fmt.Println(item,value)
+//	}
+//}
+//Slices
+//
+//import "fmt"
+//
+//func main(){
+//	mySlice :=make([]int ,0,5)
+//	fmt.Println("------------------------")
+//	fmt.Println(mySlice)
+//	fmt.Println(len(mySlice))
+//	fmt.Println(cap(mySlice))
+//	fmt.Println("------------------------")
+//	for i:=0;i<80;i++{
+//		mySlice= append(mySlice,i)
+////		fmt.Println(" len ",len(mySlice)," Capacity ",cap(mySlice),mySlice)
+//	}
+//		fmt.Println(mySlice)
+//}
+//
+//Slice Example 2
+//import "fmt"
+//
+//func main(){
+//	employee:=[]string{
+//		"name1",
+//		"name2",
+//		"name3",
+//		"name4",
+//		"name5",
+//	}
+//	//way 1
+//	for i,v:=range employee{
+//		fmt.Println(i,v)
+//	}
+//	//way 2
+//	for i:=0;i<len(employee);i++{
+//		fmt.Println(employee[i])
+//	}
+//}
+//Slice Example 3
+//import "fmt"
+//
+//func main(){
+//	records:= make([][]string,4,10)
+//	//student
+//	student1:=make([]string,4)
+//	student1[0]="raman"
+//	student1[1]="verma"
+//	student1[2]="22"
+//	student1[3]="44"
+//	records= append(records,student1)
+//	//student
+//	student2:=make([]string,4)
+//	student2[0]="ajay"
+//	student2[1]="sharma"
+//	student2[2]="24"
+//	student2[3]="88"
+//
+//	records= append(records,student1)
+//	fmt.Println(records)
+//}
+//
+//slice example 4
+//import "fmt"
+//
+//func main(){
+//	transactions:=make([][]int,0,3)
+//	for i:=0; i<3;i++{
+//		transaction:=make([]int,0)
+//		for j:=0;j<4;j++{
+//			transaction=append(transaction,j)
+//		}
+//		transactions=append(transactions,transaction)
+//	}
+//	fmt.Println(transactions)
+//
+//}
+//Question 5
 import "fmt"
 
+var i, j int
+
 func main() {
-	data:= []int{25, 42, 73, 43, 64, 84}
-	n := average(data...)
-	fmt.Println(n)
-}
-func average(av ...int) int {
-	fmt.Println(av) //shown in slice
-	fmt.Printf("%T \n", av) //shown in slice
-	var total int
-	for _, tot := range av { //range loops over list of items
-		total += tot //shorthand for  loop
+Loop:
+	for i = 1; i > 0; i++ {
+		for j = 1; j <= 20; j++ {
+			if i%j == 0 {
+				if j == 20 {
+					fmt.Println(i)
+					break Loop
+				} else {
+					continue
+				}
+			}else{
+				break
+			}
+		}
 	}
-	return total / len(av) //returns total
 }
+//import "fmt"
+//var k,l int
+//func main(){
+//	j:=1
+//	ps:=1
+//	for i:=1;i<=100;i++{
+//		j=i*i
+////		fmt.Println("product",j)
+//		k=k+j
+//		l=l+i
+//	}
+//	ps=l*l
+//	fmt.Println("product of sum",ps)
+//	fmt.Println("sum of products",k)
+//	fmt.Println("the difference between the above values are",ps-k)
+//
+//}
