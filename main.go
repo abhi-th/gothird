@@ -741,6 +741,16 @@ package main
 //	fmt.Println(numbers)
 //}
 //
+//Copy Slice
+//import "fmt"
+//
+//func main(){
+//	slice1:=[]int{1,2,3,4,5}
+//	slice2:= make([]int,2)
+//	copy(slice2,slice1)
+//	fmt.Println(slice2)
+//}
+//
 //Question 2
 //fibonaci series
 //import "fmt"
@@ -802,7 +812,6 @@ package main
 ////				  }
 ////				  fmt.Println("see1",i)
 ////			  }
-//
 //			  fmt.Println(IsPrime(t))
 //        }
 //    }
@@ -982,28 +991,29 @@ package main
 //
 //}
 //Question 5
-import "fmt"
-
-var i, j int
-
-func main() {
-Loop:
-	for i = 1; i > 0; i++ {
-		for j = 1; j <= 20; j++ {
-			if i%j == 0 {
-				if j == 20 {
-					fmt.Println(i)
-					break Loop
-				} else {
-					continue
-				}
-			}else{
-				break
-			}
-		}
-	}
-}
 //import "fmt"
+//
+//var i, j int
+//
+//func main() {
+//Loop:
+//	for i = 1; i > 0; i++ {
+//		for j = 1; j <= 20; j++ {
+//			if i%j == 0 {
+//				if j == 20 {
+//					fmt.Println(i)
+//					break Loop
+//				} else {
+//					continue
+//				}
+//			}else{
+//				break
+//			}
+//		}
+//	}
+//}
+//import "fmt"
+//
 //var k,l int
 //func main(){
 //	j:=1
@@ -1020,3 +1030,373 @@ Loop:
 //	fmt.Println("the difference between the above values are",ps-k)
 //
 //}
+//
+//Maps Example Part 1
+//Example 1
+//
+//import "fmt"
+//
+//func main(){
+//	m:=make(map[string]int) //map [key type] value type
+//
+//	m["k1"]=7
+//	m["k2"]=13
+//	m["k3"]=14
+//
+//	fmt.Println(m)
+//}
+//
+//Example 2
+//import "fmt"
+//
+//func main(){
+////	var greet= map[int]string{ \\1st way
+////		1:"hello",
+////		2:"hi",
+////	}
+//	var greet= make(map[int]string)
+//	greet[1]="hello"
+//	greet[2]="hello"
+//	greet[3]="Bonjour"
+//	greet[4]="Dias"
+//	delete(greet,4) //delete(m,k1)
+//	fmt.Println(greet)
+//}
+//https://www.golang-book.com/books/intro/6
+//Conditionalize Map
+//import "fmt"
+//
+//func main(){
+//	greet := map[int]string{
+//		1:"hi",
+//		2:"bonjour",
+//		3:"Hello",
+//		4:"Morning",
+//	}
+//	fmt.Println(greet)
+//	delete(greet,2)
+//
+//	if _, exists:=greet[2];exists{     //Condition to chexk if the value exists or not//COMMA OK
+//		fmt.Println("exist")
+//		fmt.Println(greet)
+//	}else {
+//		fmt.Println(greet)
+//		fmt.Println("doesn't exist")
+//	}
+//}
+//
+//Range With Maps
+//
+//import "fmt"
+//
+//func main(){
+//	greet:=map[int]string{
+//		1:"hi",
+//		2:"bonjour",
+//		3:"Hello",
+//		4:"Morning",
+//	}
+//
+//	for k,v:=range greet{
+//		fmt.Println(k,v)
+//	}
+//}
+//Example
+//
+// hash table Step 1
+//import "fmt"
+//
+//func main(){
+////	letter:='A' //Singe quotes for runes
+////	letter:=rune("Abhijit"[0])//for "" string give me the first position and turn it into rune
+////	fmt.Println(letter)
+////	fmt.Printf("%T \n")
+////	for i:=65;i<=122;i++{
+////		fmt.Println(i," - ",string(i)," - ",i % 12)
+////	}
+//	n:=HashBucket("Go",12)
+//	fmt.Println(n)
+//}
+//
+//func HashBucket(word string,buckets int) int{
+////	letter:=rune(word[0]) //but for this we need to make the return type as int 32 els eit would give type mismatch error
+//	letter:= int(word[0])
+//	bucket:= letter % buckets
+//	return bucket
+//}
+////Read/scan Function
+//import (
+//	"fmt"
+//	"bufio"
+//	"os"
+//	"strings"
+//)
+//
+//func main(){
+//	const input="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias tenetur, aspernatur sit eligendi in cumque tempore odit est asperiores, beatae a omnis. Esse ab non blanditiis odit unde quas, nemo iure necessitatibus dolores ipsa culpa sequi quia sapiente. In, assumenda consequuntur. Sequi rerum velit consequuntur sit suscipit ratione. Id voluptatum corrupti cum veritatis natus rerum voluptatem, sequi quibusdam. Dolorum consequatur eveniet maiores nostrum saepe officiis repellendus autem, magni ut reprehenderit aliquid vel laborum quibusdam, ducimus quisquam nulla qui iusto consequuntur deserunt possimus. Quas ratione nostrum illo, eos culpa. Ad quas qui quia iste eveniet repellendus voluptatum, tenetur molestiae ipsam perspiciatis."
+//	//newscanner provides a pointer to the scanner
+//	scanner := bufio.NewScanner(strings.NewReader(input))
+//	//set the split function for the scanning operation.
+//	scanner.Split(bufio.ScanWords)
+//	//count the words.
+//	for scanner.Scan(){
+//		fmt.Println(scanner.Text())
+//	}
+//	if err:=scanner.Err();err!=nil{
+//		fmt.Fprintln(os.Stderr,"reading input:",err)
+//	}
+//}
+//Get the book and read all
+//
+//import (
+//	"fmt"
+//	"io/ioutil"
+//	"log"
+//	"net/http"
+//)
+//
+//func main(){
+//	res,err:= http.Get("http://www.gutenberg.org/files/2701/old/moby10b.txt")
+//	if err != nil{
+//		log.Fatal(err)
+//	}
+//	bs,err := ioutil.ReadAll(res.Body)//put in byteslice
+//	res.Body.Close()
+//	if err != nil{
+//		log.Fatal(err)
+//	}
+//	fmt.Printf("%s",bs)//printed as a string
+//}
+//
+//Struct
+//
+//import "fmt"
+//
+//type person struct{
+//	first string
+//	last string
+//	age float64
+//}
+//
+//func main(){
+//	p1:=person{"James","Bond",20.9}
+//	p2:=person{"Sukhpal","Singh",14}
+//	fmt.Println(p1.first,p1.last,p1.age)
+//	fmt.Println(p2.first,p2.last,p2.age)
+//}
+//
+//User Defined Types
+//import "fmt"
+//
+//type  foo int
+//
+//func main(){
+//	var myage foo
+//	myage=44
+//	fmt.Printf("%T %v \n",myage,myage) //type here is main.foo
+//
+//	var yourage int
+//	yourage=29
+//	fmt.Printf("%T %v \n",yourage,yourage)
+//
+//	sum:=int(myage)+yourage
+//	fmt.Println(sum)
+//}
+// We used shorthand notation:
+// to create a variable named p1 of type person
+// to create a variable named p2 of type person
+// We initialized those variables with specific values
+// We used the short variable declaration operator with a struct literal to initialize
+// ----------------------------------------
+// here is how we talk about structs:
+// -- user defined type
+// -- we declare the type
+// -- the type has fields
+// -- the type can also have "tags"
+// ----  we haven't seen this yet
+// -- the type has an underlying type
+// ---- in this case, the underlying type is struct
+// -- we declare variables of the type
+// -- we initialize those variables
+// ---- initialize with a specific value, or
+// ---- or, initiliaze to the zero value
+// -- a struct is a composite type
+// ----------------------------------------
+// Bill Kennedy:
+// Go allows us the ability to declare our own types.
+// Struct types are declared by composing a fixed set of unique fields together.
+// Each field in a struct is declared with a known type.
+// This could be a built-in type or another user defined type.
+// Once we have a type declared, we can create values from the type
+// When we declare variables, the value that the variable represents is always initialized.
+// The value can be initialized with a specific value or it can be initialized to its zero value
+// For numeric types, the zero value would be 0; for strings it would be empty;
+// and for booleans it would be false.
+// In the case of a struct, the zero value would apply to all the different fields in the struct.
+// Anytime a variable is created and initialized to its zero value, it is idiomatic to use the keyword var.
+// Reserve the use of the keyword var as a way to indicate that a variable is being set to its zero value.
+// If the variable will be initialized to something other than its zero value,
+// then use the short variable declaration operator with a struct literal
+//
+//Pattern making
+//import "fmt"
+//
+//func main(){
+//	for i:=5 ;i>=1;i--{
+//		for j:=1;j<=i;j++{
+//			fmt.Print(" *")
+//		}
+//		fmt.Printf("\n")
+//	}
+//}
+//
+//type overridding
+//import "fmt"
+//
+//type person struct{
+//	first string
+//	last string
+//	age int
+//}
+//
+//type doubleZero struct{
+//	person
+//	first string
+//	spy bool
+//}
+//func main(){
+//	p1:=doubleZero{
+//		person:person{
+//			first: "James" ,
+//			last:"bond",
+//			age:22,
+//		},
+////		first:"john",
+//		spy:true,
+//	}
+//	p2:=doubleZero{
+//		person:person{
+//			first:"Asif",
+//			last:"Ali",
+//			age:28,
+//		},
+//		first: "Example",
+//		spy:false,
+//	}
+//	fmt.Println(p1.first,p1.last,p1.age) //here overriding is done
+//	fmt.Println(p1.person.first,p1.person.last)
+//	fmt.Println(p2.first,p2.last,p2.age)
+//}
+//
+//Method Override
+//import "fmt"
+//
+//type student struct{
+//	first string
+//	last string
+//	rollno int
+//}
+//type classrep struct{
+//	student
+//	classrep bool
+//	marks int
+//}
+//
+//func (s student) says(){
+//	fmt.Println("I am just a regular student")
+//}
+//
+//func (cr classrep) says(){
+//	fmt.Println("I am a Class representive")
+//}
+//
+//func main(){
+//	p1:=student{
+//		first:"Raman",
+//		last:"Singh",
+//		rollno:2,
+//	}
+//	p2:=classrep{
+//		student:student{
+//			first:"aman",
+//			last:"sharma",
+//		},
+//		classrep:true,
+//	}
+//	p1.says()
+//	p2.says()
+//}
+//
+//struct pointer
+//
+//import "fmt"
+//
+//type person struct{
+//	name string
+//	age int
+//}
+//
+//func main(){
+//	p1:= &person{"ravi",24}
+//	fmt.Println(p1)
+//	fmt.Printf("%T",p1)//type
+//	fmt.Println(p1.age)
+//	fmt.Println(p1.name)
+//}
+//
+//Json EXported /marshal
+//
+//import "fmt"
+//import "encoding/json"
+//type person struct{
+//	Fname string //uppercase
+//	Lname string //uppercase
+//	Age int //uppercase
+//	notExported string
+//}
+//
+//func main(){
+//	p1:=person{"Rama","Tiwari",25,"007"}
+//	bs,_:=json.Marshal(p1)
+//	fmt.Println(bs)
+////	fmt.Println(v)shows nil
+//	fmt.Println(string(bs))
+//}
+//
+//Json tags
+//import (
+//	"fmt"
+//	"encoding/json"
+//)
+//
+//type person struct{
+//	Fname string
+//	Lname string `json:"-"`//json tag to not include , also notice we are using `` here and not ''
+//	Age int `json:"wisdom score"`
+//}
+//
+//func main(){
+//	p1:=person{"Arun","Verma",42}
+//	bs,_:=json.Marshal(p1)
+//	fmt.Println(bs)
+//	fmt.Println(string(bs))
+//	
+//}
+//
+//Unmarshal
+import (
+	"fmt"
+	"encoding/json"
+)
+type person struct{
+	First string
+	Last string
+	Age int
+}
+
+func main(){
+	var p1 person
+	bs:=[]byte(`{"First":"Arun","Last":"Jaithley","Age":44}`)
+	json.Unmarshal(bs,&p1)
+	fmt.Println(p1.First,p1.Last)
+}
