@@ -1384,19 +1384,121 @@ package main
 //}
 //
 //Unmarshal
+//import (
+//	"fmt"
+//	"encoding/json"
+//)
+//type person struct{
+//	First string
+//	Last string
+//	Age int
+//}
+//
+//func main(){
+//	var p1 person
+//	bs:=[]byte(`{"First":"Arun","Last":"Jaithley","Age":44}`)
+//	json.Unmarshal(bs,&p1)
+//	fmt.Println(p1.First,p1.Last)
+//}
+//
+//Encode http://mindbowser.com/golang-data-structures-2/
+//import (
+//	"os"
+//	"encoding/json"
+//)
+//type person struct{
+//	First string
+//	Last string
+//	Age int
+//}
+//
+//func main(){
+//	p1:=person{"James","Bond",27}
+//	json.NewEncoder(os.Stdout).Encode(p1)
+//}
+//
+//Decode
+//import (
+//	"fmt"
+//	"strings"
+//	"encoding/json"
+//)
+//
+//type person struct{
+//	First string
+//	Last string
+//	Age int
+//	notExported int
+//}
+//
+//func main(){
+//	var p1 person
+//	rdr:=strings.NewReader(`{"First":"James"}`)
+//	json.NewDecoder(rdr).Decode(&p1)
+//	fmt.Println(p1.First)
+//	
+//}
+//
+//import "fmt"
+//
+//type Square struct{ 						//define type of structure
+//	side float64
+//}
+//
+//func (z Square) area() float64{		//make method for  above type structure
+//	return z.side * z.side
+//}
+//
+//type Shape interface{					//make type interface
+//	area() float64				//ye method hona chaiye un function mai jaha apne ko implementation chaiye is interface ki 
+//}
+//
+//func info(z Shape){						//Use above type interface to create a function so as to implement it in different form  in main func
+//	fmt.Println(z)
+//	fmt.Println(z.area())				//write the method created before
+//}
+//
+//func main(){
+//	s:=Square{10}
+//	info(s)
+//}
+//
 import (
 	"fmt"
-	"encoding/json"
+	"math"
 )
-type person struct{
-	First string
-	Last string
-	Age int
+
+type Square struct{
+	side float64
+}
+type Circle struct{
+	radius float64
 }
 
-func main(){
-	var p1 person
-	bs:=[]byte(`{"First":"Arun","Last":"Jaithley","Age":44}`)
-	json.Unmarshal(bs,&p1)
-	fmt.Println(p1.First,p1.Last)
+func (s Square) area() float64{
+	return s.side * s.side
 }
+
+func (c Circle) area() float64{
+	return 2*math.Pi *c.radius *c.radius
+}
+
+type Shape interface{
+	area() float64
+}
+
+func info (z Shape){
+	fmt.Println(z.area())
+}
+func main(){
+	s:=Square{10}
+	c:=Circle{5}
+	info(s)
+	info(c)
+}
+//
+//1.define types of elements 
+//2.make methods of above with same signature for each
+//3.create a single interface type with the common signature from above in it
+//4.make function with passing the interface in its parameter 
+//5.call in main
