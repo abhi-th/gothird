@@ -1380,7 +1380,7 @@ package main
 //	bs,_:=json.Marshal(p1)
 //	fmt.Println(bs)
 //	fmt.Println(string(bs))
-//	
+//
 //}
 //
 //Unmarshal
@@ -1436,7 +1436,7 @@ package main
 //	rdr:=strings.NewReader(`{"First":"James"}`)
 //	json.NewDecoder(rdr).Decode(&p1)
 //	fmt.Println(p1.First)
-//	
+//
 //}
 //
 //import "fmt"
@@ -1450,7 +1450,7 @@ package main
 //}
 //
 //type Shape interface{					//make type interface
-//	area() float64				//ye method hona chaiye un function mai jaha apne ko implementation chaiye is interface ki 
+//	area() float64				//ye method hona chaiye un function mai jaha apne ko implementation chaiye is interface ki
 //}
 //
 //func info(z Shape){						//Use above type interface to create a function so as to implement it in different form  in main func
@@ -1463,42 +1463,295 @@ package main
 //	info(s)
 //}
 //
-import (
-	"fmt"
-	"math"
-)
-
-type Square struct{
-	side float64
-}
-type Circle struct{
-	radius float64
-}
-
-func (s Square) area() float64{
-	return s.side * s.side
-}
-
-func (c Circle) area() float64{
-	return 2*math.Pi *c.radius *c.radius
-}
-
-type Shape interface{
-	area() float64
-}
-
-func info (z Shape){
-	fmt.Println(z.area())
-}
-func main(){
-	s:=Square{10}
-	c:=Circle{5}
-	info(s)
-	info(c)
-}
+//import (
+//	"fmt"
+//	"math"
+//)
 //
-//1.define types of elements 
+//type Square struct{
+//	side float64
+//}
+//type Circle struct{
+//	radius float64
+//}
+//
+//func (s Square) area() float64{
+//	return s.side * s.side
+//}
+//
+//func (c Circle) area() float64{
+//	return 2*math.Pi *c.radius *c.radius
+//}
+//
+//type Shape interface{
+//	area() float64
+//}
+//
+//func info (z Shape){
+//	fmt.Println(z.area())
+//}
+//func main(){
+//	s:=Square{10}
+//	c:=Circle{5}
+//	info(s)
+//	info(c)
+//}
+//
+//1.define types of elements
 //2.make methods of above with same signature for each
 //3.create a single interface type with the common signature from above in it
-//4.make function with passing the interface in its parameter 
+//4.make function with passing the interface in its parameter
 //5.call in main
+//
+//import (
+//"fmt"
+//"sort"
+//)
+//
+//type people []string
+//
+//func(p people) Len() int{ return len(p)}
+//func(p people) Swap(i,j int){ p[i],p[j]=p[j],p[i]}
+//func(p people) Less(i,j int)bool{return p[i]<p[j]}
+//
+//func main(){
+//	studygroup:=people{"ram","ravi","sham","abhi"}
+//	sort.Sort(studygroup)
+//	fmt.Println(studygroup)
+//}
+//
+//Sort a Variable not a type
+//import(
+//	"fmt"
+//	"sort"
+//)
+//
+//func main(){
+//	s:=[]string{"rahul","ravi","raman","aman","gagan"}
+//	sort.StringSlice(s).Sort()
+//	fmt.Println(s)
+//}
+//
+//Sort in reverse
+//import (
+//	"fmt"
+//	"sort"
+//)
+//
+//func main(){
+//	t:=[]string{"rahul","abhi","ravi","sham"}
+//	sort.Sort(sort.StringSlice(t))
+//	fmt.Println(t)
+//	sort.Sort(sort.Reverse(sort.StringSlice(t)))//make it other way around decending
+//	fmt.Println(t)
+//}
+//
+//Sor slice of ints
+//import (
+//	"fmt"
+//	"sort"
+//)
+//
+//func main() {
+//	n := []int{42, 56, 8, 45, 67, 23, 54}
+//	sort.Ints(n)
+//	fmt.Println(n)
+//	//	sort.IntSlice(n).Sort()
+//	//	fmt.Println(n)
+//	//	sort.Sort(sort.IntSlice(n))
+//	//	fmt.Println(n)
+//	sort.Sort(sort.Reverse(sort.IntSlice(n)))
+//	fmt.Println("reverse", n)
+//
+//}
+//EMPTY INTERFACES //Type interface
+//import "fmt"
+//
+//type vehical interface{}
+//
+//type car struct {
+//	vehical
+//	wheels int
+//}
+//type jet struct {
+//	vehical
+//	jets bool
+//}
+//type boat struct {
+//	vehical
+//	length int
+//}
+//
+//func main() {
+//	a := car{}
+//	b := jet{}
+//	c := boat{}
+//
+//	d := []vehical{a, b, c}
+//
+//	fmt.Println(d)
+//}
+//
+//Method Sets
+//import(
+//	"fmt"
+//	"math"
+//)
+//
+//type Circle struct{
+//	radius float64
+//}
+//
+//type Shape interface{
+//	area() float64
+//}
+//
+//func (c Circle) area()float64{
+//	return math.Pi *2 *c.radius *c.radius
+//}
+//
+//func info(s Shape){
+//	fmt.Println(s.area())
+//}
+//
+//func main(){
+//	d:=Circle{5}
+//	info(&d)
+//}
+//Assertion
+//import "fmt"
+//
+//func main(){
+//	var name interface{}="Sydney"
+//	str,ok:=name.(string) //assertion
+//	if ok{
+//		fmt.Printf("%q \n",str)
+//	}else{
+//		fmt.Printf("value is not a string\n")
+//	}
+//}
+//
+//Concurrency
+//import (
+//	"fmt"
+//	"sync"
+//	"time"
+//	"runtime"
+//)
+//
+//var wg sync.WaitGroup
+//
+//func init(){
+//	runtime.GOMAXPROCS(runtime.NumCPU())
+//}
+//func main() {
+//	wg.Add(2) //no of function
+//	go foo()
+//	//	foo()
+//	//	bar()
+//	go bar()
+//	wg.Wait()
+//}
+//
+//func foo() {
+//	for i := 1; i < 50; i++ {
+//		fmt.Println("foo", i)
+//		time.Sleep(time.Duration(3 * time.Millisecond))
+//	}
+//	wg.Done()
+//}
+//
+//func bar() {
+//	for j := 1; j < 50; j++ {
+//		fmt.Println("bar", j)
+//		time.Sleep(time.Duration(3 * time.Millisecond))
+//	}
+//	wg.Done()
+//}
+//
+//Race Condition
+//import (
+//	"fmt"
+//	"time"
+//	"sync"
+//)
+//
+//var counter int
+//var wg sync.WaitGroup
+//
+//func main(){
+//	wg.Add(2)
+//	go incrementor("Foo : ")
+//	go incrementor("Bar : ")
+//	wg.Wait()
+//}
+//
+//func incrementor(s string){
+//	for i:=0;i<20;i++{
+//		x:=counter
+//		x++
+//		time.Sleep(time.Duration(3 * time.Millisecond))
+//		counter=x
+//		fmt.Print(s,i)
+//		fmt.Println("  Counter ", counter)
+//	}
+//	wg.Done()
+//}
+//
+//Mutex
+//import (
+// 	"fmt"
+//	"time"
+//	"sync"
+//)
+//
+//var counter int
+//var wg sync.WaitGroup
+//var mutex sync.Mutex //for mutex
+//
+//func main(){
+//	wg.Add(2)
+//	go incrementor("Foo : ")
+//	go incrementor("Bar : ")
+//	wg.Wait()
+//}
+//
+//func incrementor(s string){
+//	for i:=0; i<20 ;i++{
+//		time.Sleep(time.Duration(3 * time.Millisecond))
+//		mutex.Lock()  //locking so that only one thread can use it at a time
+//		counter++
+//		fmt.Println(s,i," Counter ",counter)
+//		mutex.Unlock()
+//	}
+//	wg.Done()
+//}
+//
+Atomicity
+
+import (
+	"fmt"
+	"time"
+	"sync/atomic"
+	"sync"
+	"math/rand"
+)
+var counter int64
+var wg sync.WaitGroup
+
+func main(){
+	wg.Add(2)
+	go incrementor(" Foo : ")
+	go incrementor(" Bar : ")
+	wg.Wait()
+}
+
+func incrementor(s string){
+	for i:=0;i<20; i++{
+		time.Sleep(time.Duration(rand.Intn(3)) * time.Millisecond)
+		atomic.AddInt64(&counter,1)
+		fmt.Println(s,i," Counter: ",counter)
+	}
+	wg.Done()
+}
+
