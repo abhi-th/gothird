@@ -1727,31 +1727,348 @@ package main
 //	wg.Done()
 //}
 //
-Atomicity
-
-import (
-	"fmt"
-	"time"
-	"sync/atomic"
-	"sync"
-	"math/rand"
-)
-var counter int64
-var wg sync.WaitGroup
-
-func main(){
-	wg.Add(2)
-	go incrementor(" Foo : ")
-	go incrementor(" Bar : ")
-	wg.Wait()
-}
-
-func incrementor(s string){
-	for i:=0;i<20; i++{
-		time.Sleep(time.Duration(rand.Intn(3)) * time.Millisecond)
-		atomic.AddInt64(&counter,1)
-		fmt.Println(s,i," Counter: ",counter)
-	}
-	wg.Done()
-}
-
+//Atomicity
+//
+//import (
+//	"fmt"
+//	"time"
+//	"sync/atomic"
+//	"sync"
+//	"math/rand"
+//)
+//var counter int64
+//var wg sync.WaitGroup
+//
+//func main(){
+//	wg.Add(2)
+//	go incrementor(" Foo : ")
+//	go incrementor(" Bar : ")
+//	wg.Wait()
+//}
+//
+//func incrementor(s string){
+//	for i:=0;i<20; i++{
+//		time.Sleep(time.Duration(rand.Intn(3)) * time.Millisecond)
+//		atomic.AddInt64(&counter,1)
+//		fmt.Println(s,i," Counter: ",counter)
+//	}
+//	wg.Done()
+//}
+//import (
+//    "fmt"
+//    "math/rand"
+//    "sync"
+//    "sync/atomic"
+//    "time"
+//)
+//
+//var wg sync.WaitGroup
+//var counter int64
+//
+//func main() {
+//    wg.Add(2)
+//    go incrementor("Foo:")
+//    go incrementor("Bar:")
+//    wg.Wait()
+//    fmt.Println("Final Counter:", counter)
+//}
+//
+//func incrementor(s string) {
+//    for i := 0; i < 20; i++ {
+//        time.Sleep(time.Duration(rand.Intn(3)) * time.Millisecond)
+//        atomic.AddInt64(&counter, 1)
+//        fmt.Println(s, i, "Counter:", atomic.LoadInt64(&counter)) // access without race
+//    }
+//    wg.Done()
+//}
+//
+//Channels
+//import (
+//	"fmt"
+//	"time"
+//)
+//
+//func main(){
+//	c:=make(chan int)
+//
+//	go func(){
+//		for i:=1;i<10;i++{
+//			fmt.Println("before value passed to channel : ",i) //the value comes out in two
+//			c<-i
+//		}
+//	}()
+//	go func(){
+//		for {
+//			fmt.Println(<-c)
+//		}
+//	}()
+//	time.Sleep(time.Second)
+//}
+//
+//Using of range cnd close
+//
+//import "fmt"
+//
+//func main(){
+//	c:=make(chan int)
+//
+//	go func(){
+//		for i:=1;i<10;i++{
+//			c<-i
+//		}
+//		close(c) //closes after loop ends passing value to channel
+//	}()
+//	for n:=range c{
+//		fmt.Println(n)
+//	}
+//}
+//
+//N to 1 (Multiple Goroutines to 1 channel)
+//import "fmt"
+//import "sync"
+//
+//var wg sync.WaitGroup
+//
+//func main(){
+//	c:=make (chan int)
+//	wg.Add(2)
+//	go func(){
+//		for i :=1;i<10;i++{
+//			fmt.Println("before value passed to channel : ",i)
+//			c<-i
+//		}
+//		wg.Done()
+//	}()
+//	go func(){
+//		for i :=1;i<10;i++{
+//			fmt.Println("value passed to channel : ",i)
+//			c<-i
+//		}
+//		wg.Done()
+//	}()
+//
+//	go func(){
+//		wg.Wait()
+//		close(c)
+//	}()
+//
+//	for n:=range c{
+//		fmt.Println(n)
+//	}
+//}
+//Semaphore:Making a value (Here Channel values) to be used as a say flag
+//import "fmt"
+//
+//func main(){
+//	c:=make(chan int)
+//	done:=make(chan bool)
+//
+//	go func(){
+//		for i:=1;i<10;i++{
+//			c<-i
+//		}
+//		done<-true
+//	}()
+//	go func (){
+//		for i:=1;i<10;i++{
+//			c<-i
+//		}
+//		done <-true
+//	}()
+//
+//	//wrong way to do it
+//	// <-done
+//	// <-done
+//	// close(c)
+//
+//	go func(){
+//		<-done //throwing off
+//		<-done //throwing off
+//		close(c)
+//	}()
+//	for n:= range c{
+//		fmt.Println(n)
+//	}
+//}
+//
+//N-to-1 but with many goroutines(basically more than 3)
+//import "fmt"
+//
+//func main(){
+//	n:=10
+//	c:=make(chan int)
+//	done:=make(chan bool)
+//
+//	for i:=1;i<=n;i++{ //repeat go func
+//		go func(){
+//			for i:=1;i<10;i++{
+//				c<-i
+//			}
+//			done<-true
+//		}()
+//	}
+//
+//	go func (){
+//		for i:=1;i<=n;i++{  //repeat same no of times "done" too
+//			<-done
+//		}
+//		close(c)
+//	}()
+//
+//	for n:=range c{
+//		fmt.Println(n)
+//	}
+//}
+//
+//1-to-n
+//import "fmt"
+//
+//func main(){
+//	c:=make(chan int)
+//	done:=make(chan bool)
+//	go func (){
+//		for i:=0;i<10;i++{
+//			c<-i
+//		}
+//		close(c)
+//	}()
+//	go func(){
+//		for n:=range c{
+//			fmt.Println(n)
+//		}
+//		done<-true
+//	}()
+//	go func(){
+//		for n:=range c{
+//			fmt.Println(n)
+//		}
+//		done<-true
+//	}()
+//	<-done
+//	<-done
+//}
+//
+//Channels as arguments and returns
+//import "fmt"
+//
+//func main() {
+//	c := incrementor()
+//	cSum := puller(c)
+//	for n := range cSum {
+//		fmt.Println(n)
+//	}
+//}
+//
+//func incrementor() chan int {
+//	out := make(chan int)
+//	go func() {
+//		for i := 0; i < 10; i++ {
+//			out <- i
+//		}
+//		close(out)
+//	}()
+//	return (out)
+//}
+//
+//func puller(c chan int) chan int {
+//	out2 := make(chan int)
+//	go func() {
+//		var Sum int
+//		for n := range c {
+//			Sum += n
+//		}
+//		out2 <- Sum
+//		close(out2)
+//	}()
+//	return (out2)
+//}
+//
+//Channels direction
+//import "fmt"
+//
+//func main() {
+//	c := incrementor()
+//	for n := range  puller(c) {
+//		fmt.Println(n)
+//	}
+//}
+//
+//func incrementor() <-chan int {
+//	out := make(chan int)
+//	go func() {
+//		for i := 0; i < 10; i++ {
+//			out <- i
+//		}
+//		close(out)
+//	}()
+//	return (out)
+//}
+//
+//func puller(c <-chan int) <-chan int {
+//	out2 := make(chan int)
+//	go func() {
+//		var Sum int
+//		for n := range c {
+//			Sum += n
+//		}
+//		out2 <- Sum
+//		close(out2)
+//	}()
+//	return (out2)
+//}
+//
+//Race Vs Deadlock/ Incrementor With Channels
+//import "fmt"
+//
+//func main(){
+//	c1:=incrementor("foo ")
+//	c2:=incrementor("bar ")
+//	c3:=puller(c1)
+//	c4:=puller(c2)
+//	fmt.Println("fnal Counter ",<-c4+<-c3)   //Query
+//}
+//func incrementor(s string)chan int{
+//	out:=make(chan int)
+//	go func (){
+//		for i:=1;i<10;i++{
+//			out<-i
+//			fmt.Println(s,i)
+//		}
+//		close(out)
+//	}()
+//	return out
+//}
+//func puller(c chan int)chan int{
+//	out2:=make(chan int)
+//	go func(){
+//		var sum int
+//		for n:=range c{
+//			sum = sum +n
+//		}
+//		out2<-sum
+//		close(out2)
+//	}()
+//	return out2
+//}
+//
+//Deadlock
+//import "fmt"
+//
+//func main(){
+//	c:=make(chan int)
+//	c<-1
+//	fmt.Println(<-c)
+//}
+//Deadlock removed
+//import "fmt"
+//
+//func main(){
+//	c:=make(chan int)
+//	go func (){
+//		c<-1
+//	}()
+//	fmt.Println(<-c)
+//}
+//
+//Why Use Range
+//
