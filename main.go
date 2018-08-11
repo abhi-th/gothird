@@ -2072,3 +2072,182 @@ package main
 //
 //Why Use Range
 //
+//import "fmt"
+//
+//func main(){
+//	c:=make(chan int)
+//	go func (){
+//		for i:=0;i<10;i++{
+//			c<-i
+//		}
+//		close(c)
+//	}()
+//	
+////	fmt.Println(<-c)
+//
+////	for{
+////		fmt.Println(<-c)
+////	}
+//	
+//	for n:=range c{
+//		fmt.Println(n)
+//	}
+//}
+//
+//Factorials via channel
+//import "fmt"
+//
+//func main(){
+//	f:=factorial(10)
+//	for n:= range f{		
+//		fmt.Println(n)
+//	}
+//}
+//
+//func factorial(n int)chan int{
+//	out:=make(chan int)
+//	go func(){
+//		total:=1
+//		for i:=n;i>0;i--{
+//			total= total *i
+//		}
+//		out<-total
+//		close(out)
+//	}()
+//	return out
+//}
+//
+////PipeLines
+//import "fmt"
+//
+//func main(){
+////	c:=gen(2,3)
+////	out:=sq(c)
+//	//third
+//// fmt.Println(<-out)
+////	fmt.Println(<-out)
+//	
+////	for r:=range out{
+////		fmt.Println(r)
+////	}
+//	
+//	for r:=range sq(gen(2,3)){
+//		fmt.Println(r)
+//	}
+//}
+////first
+//func gen(num ...int)chan int{
+//	out:=make(chan int)
+//	go func(){
+//		for _,m:=range num{
+//			out<-m
+//		}
+//		close(out)
+//	}()
+//	return out
+//}
+////second
+//func sq(in chan int)chan int{
+//	out:=make(chan int)
+//	go func(){
+//		for n:=range in{
+//			out<-n*n
+//		}
+//		close(out)
+//	}()
+//	return out
+//}
+//
+//Factorials Via Channel
+//
+//import "fmt"
+//
+//func main(){
+//	in:= gen()
+//	f:= factorial(in)
+//	for n:= range f{
+//		fmt.Println(n)
+//	}
+//}
+//
+//func gen() chan int{
+//	out:=make(chan int)
+//	go func (){
+//		for i:=0;i<10;i++{
+//			for j:=3;j<13;j++{
+//				out<-j
+//			}
+//		}
+//		close(out)
+//	}()
+//	return out
+//}
+//
+//func factorial(in chan int) chan int{
+//	out:=make(chan int)
+//	go func(){
+//		for n:=range in{
+//			out<-fact(n)
+//		}
+//		close(out)
+//	}()
+//	return out
+//}
+//
+//func fact(n int) int{
+//	total:=1
+//	for i:=n;i>0;i--{
+//		total=total*i
+//	}
+//	return total
+//}
+//Fan In
+//import (
+//	"fmt"
+//	"math/rand"
+//	"time"
+//)
+//func main(){
+//	c:=FanIn(boring("Ann"),boring("John"))
+//	for i:=0;i<10;i++{
+//		fmt.Println(<-c)
+//	}
+//	fmt.Println("finished")
+//}
+//func boring(msg string) <-chan string{
+//	c:=make(chan string)
+//	go func(){
+//		for i:=0;;i++{
+//			c<-fmt.Sprintf("%s %d",msg,i)
+//			time.Sleep(time.Duration(rand.Intn(1e3))*time.Millisecond)
+//		}
+//	}()
+//	return c
+//}
+//
+////fan In
+//func FanIn(input1,input2 <-chan string)<-chan string{
+//	c:=make(chan string)
+//	go func(){
+//		for {
+//			c<-<-input1
+//		}
+//	}()
+//	go func(){
+//		for {
+//			c<-<-input2
+//		}
+//	}()
+//	return c
+//}
+//
+//Fan In
+import "fmt"
+
+func main(){
+	in:=gen(2,3)
+}
+
+func gen(num ...int)chan int{
+	fmt.Printf("%T",num)
+}
