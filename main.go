@@ -2082,13 +2082,13 @@ package main
 //		}
 //		close(c)
 //	}()
-//	
+//
 ////	fmt.Println(<-c)
 //
 ////	for{
 ////		fmt.Println(<-c)
 ////	}
-//	
+//
 //	for n:=range c{
 //		fmt.Println(n)
 //	}
@@ -2099,7 +2099,7 @@ package main
 //
 //func main(){
 //	f:=factorial(10)
-//	for n:= range f{		
+//	for n:= range f{
 //		fmt.Println(n)
 //	}
 //}
@@ -2126,11 +2126,11 @@ package main
 //	//third
 //// fmt.Println(<-out)
 ////	fmt.Println(<-out)
-//	
+//
 ////	for r:=range out{
 ////		fmt.Println(r)
 ////	}
-//	
+//
 //	for r:=range sq(gen(2,3)){
 //		fmt.Println(r)
 //	}
@@ -2173,10 +2173,11 @@ package main
 //func gen() chan int{
 //	out:=make(chan int)
 //	go func (){
-//		for i:=0;i<10;i++{
-//			for j:=3;j<13;j++{
+//		for i:=0;i<100;i++{
+//			for j:=3;j<16;j++{
 //				out<-j
 //			}
+//			fmt.Println(i)
 //		}
 //		close(out)
 //	}()
@@ -2242,12 +2243,215 @@ package main
 //}
 //
 //Fan In
-import "fmt"
+//import "fmt"
+//import "sync"
+//
+//func main() {
+//	in := gen(2, 3)
+//
+//	//Fan Out
+//	c1 := sq(in)
+//	c2 := sq(in)
+//	
+//	//Fan in
+////	fmt.Println(<-c1)
+////	fmt.Println(<-c2)
+//	for n:=range merge(c1,c2){
+//		fmt.Println(n)
+//	}
+//}
+//
+//func gen(num ...int) chan int {
+//	fmt.Printf("%T \n", num)
+//	out := make(chan int)
+//	go func() {
+//		for _, n := range num {
+//			out <- n
+//		}
+//		close(out)
+//	}()
+//	return out
+//}
+//
+//func sq(cs chan int) chan int {
+//	out := make(chan int)
+//	go func() {
+//		for n := range cs {
+//			out <- n * n
+//		}
+//		close(out)
+//	}()
+//	return out
+//}
+//
+//func merge(mr ...chan int)chan int{
+//	out:=make(chan int)
+//	var wg sync.WaitGroup
+//	wg.Add(len(mr))
+//	for _,v:=range mr{
+//		go func (ch chan int){
+//			for n:=range ch{
+//				out<-n
+//			}
+//			wg.Done()
+//		}(v)
+//	}
+//	go func(){
+//		wg.Wait()
+//		close(out)
+//	}()
+//	return out
+//}
+//
+//Links
+//Section 17, Lecture 158
+//
+//    Concurrency
+//        Visualizing Concurrency in Go
+//            http://divan.github.io/posts/go_concurrency_visualize/
+//         Dancing with Go’s Mutexes
+//            https://medium.com/@deckarep/dancing-with-go-s-mutexes-92407ae927bf#.wjr1u2xjm
+//    Memory Allocation
+//        A great Stack Overflow post on memory allocation
+//            http://stackoverflow.com/questions/34197248/how-can-i-store-reference-to-the-result-of-an-operation-in-go
+//        A great article on memory allocation
+//
+//
+//            http://golangtutorials.blogspot.ae/2011/06/memory-variables-in-memory-and-pointers.html
+//
+//Error Handling
+//
+//import (
+//	"log"
+//	"os"
+//)
+////func init(){
+////	nf,err:=os.Create("log.txt")
+////	if err!=nil{
+////		fmt.Println(err)
+////	}
+////	log.SetOutput(nf)
+////}
+//
+//func main(){
+//	_,err:= os.Open("no-file.txt")
+//	if err!=nil{
+////		fmt.Println("err happened ", err)
+////		 log.Println("err happened",err)
+//		log.Fatalln(err)
+//		//panic (err)
+//	}
+//}
+//
+//Show your own error message
+//
+//import (
+//	"log"
+//	"errors"
+//)
+//func main(){
+//	_,err:=Sqrt(-10)
+//	if err != nil{
+//		log.Fatalln(err)
+//	}
+//}
+//
+//func Sqrt(f float64)(float64,error){
+//	if f<0{
+//		return 0,errors.New("math error:square root of number is negative")
+//	}
+//	return 42, nil
+//}
+//
+//errors.New as a Variable
+//import(
+//	"log"
+//	"errors"
+//)
+//
+//var ErrSqrtMath =errors.New("Here's a math error for you")
+//
+//func main(){
+//	_,err:=Sqrt(-10)
+//	if err!= nil{
+//		log.Fatalln(err)
+//	}
+//}
+//
+//func Sqrt(f float64)(float64, error){
+//	if f<0{
+//		return 0,ErrSqrtMath
+//	}
+//	return 42,nil
+//}
+//fmt.Errorf::similary like Printf but here error is also shown
+//import(
+//	"log"
+////	"errors"
+//	"fmt"
+//)
+//
+//func main(){
+//	_,err:=Sqrt(-10.25)
+//	if err!=nil{
+//		log.Fatalln(err)
+//	}
+//}
+//func Sqrt(f float64)(float64, error){
+//	if f<0{
+//		return 0 ,fmt.Errorf("sqrt is negative: %v",f)
+//	}
+//	return 42,nil
+//}
+//
+//fmt.Errorf with Variable 
+//import(
+//	"log"
+//	"fmt"
+//)
+//
+//func main(){
+//	_,err:=Sqrt(-10.25)
+//	if err!=nil{
+//		log.Fatalln(err)
+//	}
+//}
+//func Sqrt(f float64)(float64, error){
+//	if f<0{
+//		ErrSqrtMath:=fmt.Errorf("sqrt is negative: %v",f) //inside here cause if outside scope of f will be problem 
+//		return 0,ErrSqrtMath
+//	}
+//	return 42,nil
+//}
+//
+//
+import (
+	"log"
+//	"errors"
+	"fmt"
+)
+
+type NorgateError struct{
+	longi,lat string
+	err error
+}
+
+func (n *NorgateError) Error() string{
+	return fmt.Sprintf("error here is : %v, %v ,%v", n.lat, n.longi,n.err)
+}
 
 func main(){
-	in:=gen(2,3)
+	_,err:=Sqrt(-10.23)
+	if err!=nil{
+		log.Println(err)
+	}
 }
 
-func gen(num ...int)chan int{
-	fmt.Printf("%T",num)
+func Sqrt(f float64)(float64, error){
+	if f<0{
+		ne:=fmt.Errorf("Norgate math err: %v",f)
+		return 0, &NorgateError{"50.889 N","90.99 W",ne}
+	}
+	return 42, nil
 }
+
